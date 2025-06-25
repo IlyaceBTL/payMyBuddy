@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Entity
+@IdClass(FriendId.class)
 @Table(name = "friend")
 public class Friend {
 

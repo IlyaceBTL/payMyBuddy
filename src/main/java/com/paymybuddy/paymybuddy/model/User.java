@@ -44,7 +44,7 @@ public class User {
     private String password;
 
     @ManyToOne
-    @JoinColumn(name = "Bank_Account_id", referencedColumnName = "idBank_Account", nullable = false,
+    @JoinColumn(name = "idBank_Account", referencedColumnName = "idBankAccount", nullable = false,
             foreignKey = @ForeignKey(name = "fk_User_Bank_Account"))
     private BankAccount bankAccount;
 }

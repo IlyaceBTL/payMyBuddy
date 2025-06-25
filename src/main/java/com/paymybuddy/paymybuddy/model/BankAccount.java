@@ -11,8 +11,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "bank_account", uniqueConstraints = {
-        @UniqueConstraint(name = "idBank_Account_UNIQUE", columnNames = "idBank_Account")
+@Table(name = "Bank_Account", uniqueConstraints = {
+        @UniqueConstraint(name = "idBankAccount", columnNames = "idBankAccount")
 })
 public class BankAccount {
 
