@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Votre CSS existant reste dans la balise style -->
+</head>
+<body>
+    <div class="page-transfert">
+        <!-- Header Navigation -->
+        <nav class="header-navigation">
+            <div class="logo">Pay My Buddy</div>
+            <div class="items">
+                <a href="#" class="transferer">Transférer</a>
+                <a href="#" class="profil">Profil</a>
+                <a href="#" class="ajouter-relation">Ajouter relation</a>
+                <a href="#" class="se-deconnecter">Se déconnecter</a>
+            </div>
+        </nav>
+
+        <!-- Zone de transfert -->
+        <div class="transfer-zone">
+            <select class="dropdown-contact">
+                <option>Sélectionner un contact</option>
+            </select>
+
+            <input type="text" class="input-montant" placeholder="Montant">
+
+            <select class="dropdown-motif">
+                <option>Motif</option>
+            </select>
+
+            <button class="button-transfer">
+                <span>Payer</span>
+            </button>
+        </div>
+
+        <!-- Tableau des transactions -->
+        <div class="table">
+            <h2 class="title">Mes transactions</h2>
+
+            <div class="table-header">
+                <div class="relations">Relations</div>
+                <div class="description">Description</div>
+                <div class="montant">Montant</div>
+            </div>
+
+            <div class="list">
+                <div class="transaction">
+                    <div class="contact">Laure-Anne</div>
+                    <div class="desc">Restaurant</div>
+                    <div class="amount">10€</div>
+                </div>
+
+                <div class="transaction">
+                    <div class="contact">Clara</div>
+                    <div class="desc">Voyage</div>
+                    <div class="amount">25€</div>
+                </div>
+
+                <div class="transaction">
+                    <div class="contact">Luc</div>
+                    <div class="desc">Billets de cinéma</div>
+                    <div class="amount">8€</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

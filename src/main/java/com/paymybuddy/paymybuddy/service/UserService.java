@@ -27,6 +27,10 @@ public class UserService {
         return userRepository.findById(userId);
     }
 
+    public Optional<User> getUserByUserName(String userName) {
+        return userRepository.findByUserName(userName);
+    }
+
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -68,5 +72,7 @@ public class UserService {
         String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         return email == null || !email.matches(emailRegex);
     }
+
+
 
 }
