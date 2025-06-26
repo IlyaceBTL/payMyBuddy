@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <title>Inscription</title>
@@ -57,6 +57,9 @@
   </style>
 </head>
 <body>
+<div th:if="${errorMessage}" style="color: red; margin-bottom: 16px;">
+  <span th:text="${errorMessage}"></span>
+</div>
 <div class="register-container">
   <div class="register-title">Créer un compte</div>
   <form method="post" action="/register">

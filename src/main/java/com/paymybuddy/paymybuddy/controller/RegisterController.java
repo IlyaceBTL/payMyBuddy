@@ -1,10 +1,13 @@
 package com.paymybuddy.paymybuddy.controller;
 
+import com.paymybuddy.paymybuddy.dto.RegisterRequest;
 import com.paymybuddy.paymybuddy.service.RegisterService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.apache.logging.log4j.Logger;
 
 @Controller
@@ -26,13 +29,22 @@ public class RegisterController {
     }
 
     @PostMapping("/register")
-    public String processRegistration(@RequestParam String userName,
-                                      @RequestParam String lastName,
-                                      @RequestParam String firstName,
-                                      @RequestParam String email,
-                                      @RequestParam String password,
-                                      @RequestParam String confirmPassword) {
-        registerService.registerUser(email, password, confirmPassword, firstName, lastName, userName);
+    public String processRegistration(
+            @Valid RegisterRequest registerRequest,
+            BindingResult bindingResult,
+            Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("errorMessage", bindingResult.getAllErrors().getFirst().getDefaultMessage());
+            return "register";
+        }
+        registerService.registerUser(
+                registerRequest.getEmail(),
+                registerRequest.getPassword(),
+                registerRequest.getConfirmPassword(),
+                registerRequest.getFirstName(),
+                registerRequest.getLastName(),
+                registerRequest.getUserName()
+        );
         return "redirect:/login";
     }
 }

@@ -46,8 +46,8 @@ public class UserService {
     public User updateUser(User user) {
         String email = user.getEmail();
         if (isInvalidEmail(email)) {
-            Log.error(INVALIDE_EMAIL, email);
-            throw new IllegalArgumentException(INVALIDE_EMAIL);
+            Log.error(INVALID_EMAIL, email);
+            throw new IllegalArgumentException(INVALID_EMAIL);
         }
         user.setPassword(securityConfig.passwordEncoder().encode(user.getPassword()));
         return userRepository.save(user);
@@ -56,18 +56,18 @@ public class UserService {
     public User createUser(User user) {
         String email = user.getEmail();
         if (isInvalidEmail(email)) {
-            Log.error(INVALIDE_EMAIL, email);
-            throw new IllegalArgumentException(INVALIDE_EMAIL);
+            Log.error(INVALID_EMAIL, email);
+            throw new IllegalArgumentException(INVALID_EMAIL);
         }
         if (userRepository.findByEmail(email).isPresent()) {
-            Log.error(INVALIDE_EMAIL, email);
-            throw new IllegalArgumentException(INVALIDE_EMAIL);
+            Log.error(EMAIL_ALREADY_USED, email);
+            throw new IllegalArgumentException(EMAIL_ALREADY_USED);
         }
         user.setPassword(securityConfig.passwordEncoder().encode(user.getPassword()));
         return userRepository.save(user);
     }
 
-    private boolean isInvalidEmail(String email) {
+    public boolean isInvalidEmail(String email) {
         // Simple regex for email validation
         String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         return email == null || !email.matches(emailRegex);
