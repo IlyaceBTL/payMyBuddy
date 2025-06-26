@@ -47,4 +47,13 @@ public class User {
     @JoinColumn(name = "idBank_Account", referencedColumnName = "idBankAccount", nullable = false,
             foreignKey = @ForeignKey(name = "fk_User_Bank_Account"))
     private BankAccount bankAccount;
+
+    public User(String userName, String lastName, String firstName, String email, String password, BankAccount bankAccount) {
+        this.userName = userName;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.email = email;
+        this.password = password;
+        this.bankAccount = bankAccount;
+    }
 }
