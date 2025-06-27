@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Setter
 @Getter
 @AllArgsConstructor
@@ -18,6 +19,7 @@ import lombok.Setter;
 })
 public class User {
 
+    //todo: add UUID for idUser
     @Id
     @Column(name = "idUser")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

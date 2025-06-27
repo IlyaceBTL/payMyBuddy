@@ -13,11 +13,11 @@ public class AuthenticationEventsLogger {
 
     @EventListener
     public void onSuccess(AuthenticationSuccessEvent event) {
-        log.info("Connexion réussie pour : {}", event.getAuthentication().getName());
+        log.info("Successful connection for : {}", event.getAuthentication().getName());
     }
 
     @EventListener
     public void onFailure(AbstractAuthenticationFailureEvent event) {
-        log.warn("Échec de connexion pour : {}", event.getAuthentication().getName());
+        log.warn("Connection failure for : {}", event.getAuthentication().getName());
     }
 }
