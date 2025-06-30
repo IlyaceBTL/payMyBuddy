@@ -23,7 +23,7 @@ public class User {
     @Id
     @Column(name = "idUser")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idUser;
+    private Long idUser;
 
     @NotBlank
     @Column(name = "userName", nullable = false)
@@ -46,8 +46,8 @@ public class User {
     private String password;
 
     @ManyToOne
-    @JoinColumn(name = "idBank_Account", referencedColumnName = "idBankAccount", nullable = false,
-            foreignKey = @ForeignKey(name = "fk_User_Bank_Account"))
+    @JoinColumn(name = "idBankAccount", referencedColumnName = "idBankAccount", nullable = false,
+            foreignKey = @ForeignKey(name = "fk_user_bank_account"))
     private BankAccount bankAccount;
 
     public User(String userName, String lastName, String firstName, String email, String password, BankAccount bankAccount) {

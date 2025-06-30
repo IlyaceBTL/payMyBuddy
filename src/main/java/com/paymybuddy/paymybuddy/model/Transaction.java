@@ -22,7 +22,7 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idTransaction")
-    private Integer idTransaction;
+    private Long idTransaction;
 
     @Column(name = "amount", nullable = false)
     private BigDecimal amount;
@@ -34,11 +34,11 @@ public class Transaction {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "idUserSender", nullable = false)
+    @JoinColumn(name = "idUserSender", referencedColumnName = "idUser", nullable = false)
     private User userSender;
 
     @ManyToOne
-    @JoinColumn(name = "idUserReceveir", nullable = false)
+    @JoinColumn(name = "idUserReceveir", referencedColumnName = "idUser", nullable = false)
     private User userReceveir;
 
     @Column(name = "fee", nullable = false)

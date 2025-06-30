@@ -10,7 +10,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class FriendId implements Serializable {
-    private Integer user1;
-    private Integer user2;
-
+    private Long user1;
+    private Long user2;
 }

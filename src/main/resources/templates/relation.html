@@ -13,7 +13,9 @@
         <a th:href="@{/dashboard}" class="nav-link">Transférer</a>
         <a th:href="@{/profile}" class="nav-link">Profil</a>
         <a th:href="@{/relation}" class="nav-link active">Ajouter relation</a>
-        <a th:href="@{/logout}" class="nav-link">Se déconnecter</a>
+        <form id="logoutForm" th:action="@{/logout}" method="post" style="display:inline;">
+            <a href="#" class="nav-link" onclick="document.getElementById('logoutForm').submit(); return false;">Se déconnecter</a>
+        </form>
     </div>
 </nav>
 <div class="relation-form-container">

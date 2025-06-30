@@ -19,23 +19,24 @@ public class RegisterController {
 
     private static final Logger log = org.apache.logging.log4j.LogManager.getLogger(RegisterController.class);
 
-
     private final RegisterService registerService;
-
 
     @GetMapping
     public String showRegistrationPage() {
-        log.info("Displaying Register page");
+        log.info("Displaying registration page.");
         return "register";
     }
 
     @PostMapping
     public String processRegistration(@Valid RegisterRequest registerRequest, BindingResult bindingResult, Model model) {
+        log.info("Processing registration for email: {}", registerRequest.getEmail());
         if (bindingResult.hasErrors()) {
+            log.warn("Registration failed due to validation error: {}", bindingResult.getAllErrors().getFirst().getDefaultMessage());
             model.addAttribute("errorMessage", bindingResult.getAllErrors().getFirst().getDefaultMessage());
             return "register";
         }
         registerService.registerUser(registerRequest.getEmail(), registerRequest.getPassword(), registerRequest.getConfirmPassword(), registerRequest.getFirstName(), registerRequest.getLastName(), registerRequest.getUserName());
+        log.info("Registration successful for email: {}", registerRequest.getEmail());
         return "redirect:/login";
     }
 }
