@@ -27,6 +27,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user.isEmpty()) throw new UsernameNotFoundException(email);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        return new org.springframework.security.core.userdetails.User(user.get().getUserName(), user.get().getPassword(), grantedAuthorities);
+        return new org.springframework.security.core.userdetails.User(user.get().getEmail(), user.get().getPassword(), grantedAuthorities);
     }
 }

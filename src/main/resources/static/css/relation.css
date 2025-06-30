@@ -46,11 +46,7 @@ body {
     height: 30px;
 }
 
-.nav-link,
-.transferer,
-.profil,
-.ajouter-relation,
-.se-deconnecter {
+.nav-link {
     font-family: 'Inter', sans-serif;
     font-size: 20px;
     line-height: 150%;
@@ -63,42 +59,69 @@ body {
     padding: 0 8px;
 }
 
-.nav-link.active,
-.ajouter-relation {
+.nav-link.active {
     color: #207FEE;
     font-weight: 700;
 }
 
-.items .transferer { width: 98px; }
-.items .profil { width: 50px; }
-.items .ajouter-relation { width: 153px; }
-.items .se-deconnecter { width: 152px; }
+.items .nav-link:nth-child(1) { width: 98px; }
+.items .nav-link:nth-child(2) { width: 50px; }
+.items .nav-link:nth-child(3) { width: 153px; }
+.items .nav-link:nth-child(4) { width: 152px; }
 
-/* Zone de transfert */
-.transfer-zone {
+/* Form Container */
+.relation-form-container {
     position: absolute;
     width: 946px;
-    height: 100px;
+    height: 300px;
     left: 262px;
-    top: 240px;
+    top: 362px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+}
+
+/* Form */
+.relation-form {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     gap: 16px;
+    width: 946px;
+    height: 300px;
     background: none;
 }
 
-.dropdown-contact,
-.dropdown-motif,
-.input-montant {
+/* Input Block */
+.input-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    width: 484px;
+    height: 92px;
+}
+
+.input-block label {
+    width: 484px;
+    height: 30px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 150%;
+    color: #000000;
+}
+
+.input-block input {
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     padding: 12px 16px;
     gap: 8px;
-    width: 220px;
+    width: 484px;
     height: 54px;
     background: #FFFFFF;
     border: 1px solid #E0E0E0;
@@ -109,7 +132,8 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
-.button-transfer {
+/* Button */
+.add-btn {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -125,7 +149,7 @@ body {
     cursor: pointer;
 }
 
-.button-transfer span {
+.add-btn span {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     font-size: 24px;
@@ -138,76 +162,3 @@ body {
     justify-content: center;
 }
 
-/* Tableau des transactions */
-.table {
-    position: absolute;
-    width: 1311px;
-    min-height: 426px;
-    left: 80px;
-    top: 370px;
-    border: 1px solid #E0E0E0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-    border-radius: 8px;
-    background: #fff;
-    padding: 24px 24px 0 24px;
-}
-
-.table .title {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 24px;
-    color: #000;
-}
-
-.table-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    font-weight: 600;
-    font-size: 24px;
-    margin-bottom: 16px;
-    color: #000;
-}
-
-.table-header .relations { width: 200px; }
-.table-header .description { width: 670px; }
-.table-header .montant { width: 98px; text-align: right; }
-
-.list {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-}
-
-.transaction {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border-top: 1px solid #E0E0E0;
-    font-size: 24px;
-    height: 60px;
-    color: #000;
-}
-
-.transaction .contact {
-    width: 200px;
-    font-weight: 500;
-}
-
-.transaction .desc {
-    width: 670px;
-    font-weight: 400;
-}
-
-.transaction .amount {
-    width: 98px;
-    text-align: right;
-    font-weight: 400;
-}
-
-@media (max-width: 1200px) {
-    .table, .transfer-zone {
-        left: 2vw;
-        width: 96vw;
-    }
-}
