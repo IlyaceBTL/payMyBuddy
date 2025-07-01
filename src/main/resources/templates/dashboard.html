@@ -30,10 +30,7 @@
         <input type="number" class="input-montant" name="amount" placeholder="Montant" min="1" step="0.01" required>
     </label>
     <label>
-        <select class="dropdown-motif" name="motif" required>
-            <option value="" disabled th:selected="${motif == null}">Motif</option>
-            <option th:each="motif : ${motifs}" th:value="${motif}" th:text="${motif}"></option>
-        </select>
+        <input type="text" class="input-description" name="description" placeholder="Description" maxlength="255" required>
     </label>
     <button class="button-transfer" type="submit">
         <span>Payer</span>

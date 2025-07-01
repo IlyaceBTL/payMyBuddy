@@ -1,6 +1,6 @@
 package com.paymybuddy.paymybuddy.controller;
 
-import com.paymybuddy.paymybuddy.dto.RegisterRequest;
+import com.paymybuddy.paymybuddy.dto.RegisterRequestDto;
 import com.paymybuddy.paymybuddy.service.RegisterService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,15 +28,15 @@ public class RegisterController {
     }
 
     @PostMapping
-    public String processRegistration(@Valid RegisterRequest registerRequest, BindingResult bindingResult, Model model) {
-        log.info("Processing registration for email: {}", registerRequest.getEmail());
+    public String processRegistration(@Valid RegisterRequestDto registerRequestDto, BindingResult bindingResult, Model model) {
+        log.info("Processing registration for email: {}", registerRequestDto.getEmail());
         if (bindingResult.hasErrors()) {
             log.warn("Registration failed due to validation error: {}", bindingResult.getAllErrors().getFirst().getDefaultMessage());
             model.addAttribute("errorMessage", bindingResult.getAllErrors().getFirst().getDefaultMessage());
             return "register";
         }
-        registerService.registerUser(registerRequest.getEmail(), registerRequest.getPassword(), registerRequest.getConfirmPassword(), registerRequest.getFirstName(), registerRequest.getLastName(), registerRequest.getUserName());
-        log.info("Registration successful for email: {}", registerRequest.getEmail());
+        registerService.registerUser(registerRequestDto.getEmail(), registerRequestDto.getPassword(), registerRequestDto.getConfirmPassword(), registerRequestDto.getFirstName(), registerRequestDto.getLastName(), registerRequestDto.getUserName());
+        log.info("Registration successful for email: {}", registerRequestDto.getEmail());
         return "redirect:/login";
     }
 }

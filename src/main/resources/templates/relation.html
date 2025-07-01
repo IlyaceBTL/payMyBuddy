@@ -19,10 +19,10 @@
     </div>
 </nav>
 <div class="relation-form-container">
-    <form class="relation-form" method="post" th:action="@{/relation}">
+    <form class="relation-form" method="post" th:action="@{/relation/add}">
         <div class="input-block">
-            <label for="email">Chercher une relation</label>
-            <input type="email" id="email" name="email" placeholder="Email du contact" required>
+            <label for="friendEmail">Chercher une relation</label>
+            <input type="email" id="friendEmail" name="friendEmail" placeholder="Email du contact" required>
         </div>
         <button type="submit" class="add-btn">
             <span>Ajouter</span>

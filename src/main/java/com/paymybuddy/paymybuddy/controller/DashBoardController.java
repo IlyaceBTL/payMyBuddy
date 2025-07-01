@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -27,8 +28,11 @@ public class DashBoardController {
     }
 
     @GetMapping("/dashboard")
-    public String showDashboard() {
+    public String showDashboard(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         logger.info("User accessed the dashboard page.");
+        // Ajoute les contacts et transactions au modèle
+        model.addAttribute("contacts", dashBoardService.getContactsForUser(userDetails.getUsername()));
+        model.addAttribute("transactions", dashBoardService.getTransactionsForUser(userDetails.getUsername()));
         return "dashboard";
     }
 
@@ -61,5 +65,39 @@ public class DashBoardController {
     public String showAddRelation() {
         logger.info("User accessed the add relation page.");
         return "relation";
+    }
+
+    @PostMapping("/relation/add")
+    public String addRelation(@RequestParam("friendEmail") String friendEmail,
+                              @AuthenticationPrincipal UserDetails userDetails,
+                              RedirectAttributes redirectAttributes) {
+        logger.info("User '{}' attempts to add friend '{}'.", userDetails.getUsername(), friendEmail);
+        boolean result = dashBoardService.addFriendByEmail(userDetails.getUsername(), friendEmail);
+        if (result) {
+            redirectAttributes.addFlashAttribute("successMessage", "Friend added successfully.");
+            logger.info("Friend '{}' added for user '{}'.", friendEmail, userDetails.getUsername());
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Unable to add friend. Check if the email exists or is already a friend.");
+            logger.warn("Failed to add friend '{}' for user '{}'.", friendEmail, userDetails.getUsername());
+        }
+        return "redirect:/relation";
+    }
+
+    @PostMapping("/transfer")
+    public String transferMoney(@RequestParam("contactEmail") String contactEmail,
+                                @RequestParam("amount") double amount,
+                                @RequestParam("description") String description,
+                                @AuthenticationPrincipal UserDetails userDetails,
+                                RedirectAttributes redirectAttributes) {
+        logger.info("User '{}' attempts to transfer {}€ to '{}' with description '{}'.", userDetails.getUsername(), amount, contactEmail, description);
+        boolean result = dashBoardService.transferMoney(userDetails.getUsername(), contactEmail, amount, description);
+        if (result) {
+            redirectAttributes.addFlashAttribute("successMessage", "Transfer successful.");
+            logger.info("Transfer successful from '{}' to '{}'.", userDetails.getUsername(), contactEmail);
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Transfer failed. Please check your balance or contact.");
+            logger.warn("Transfer failed from '{}' to '{}'.", userDetails.getUsername(), contactEmail);
+        }
+        return "redirect:/dashboard";
     }
 }
