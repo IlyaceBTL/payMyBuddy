@@ -5,11 +5,12 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 public class FriendId implements Serializable {
-    private Long user1;
-    private Long user2;
+    private UUID user1;
+    private UUID user2;
 }

@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 
 @Setter
 @Getter
@@ -19,11 +21,9 @@ import lombok.Setter;
 })
 public class User {
 
-    //todo: add UUID for idUser
     @Id
-    @Column(name = "idUser")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idUser;
+    @Column(name = "idUser", columnDefinition = "BINARY(16)")
+    private UUID idUser;
 
     @NotBlank
     @Column(name = "userName", nullable = false)
@@ -57,5 +57,12 @@ public class User {
         this.email = email;
         this.password = password;
         this.bankAccount = bankAccount;
+    }
+
+    @PrePersist
+    public void generateId() {
+        if (idUser == null) {
+            idUser = UUID.randomUUID();
+        }
     }
 }

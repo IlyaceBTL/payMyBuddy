@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.authentication.event.AbstractAuthenticationFailureEvent;
+import org.springframework.security.authentication.event.LogoutSuccessEvent;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,5 +20,11 @@ public class AuthenticationEventsLogger {
     @EventListener
     public void onFailure(AbstractAuthenticationFailureEvent event) {
         log.warn("Connection failure for : {}", event.getAuthentication().getName());
+    }
+
+    @EventListener
+    public void onLogout(LogoutSuccessEvent event) {
+        String username = event.getAuthentication().getName();
+        log.info("Successful disconnection for : {}", username);
     }
 }

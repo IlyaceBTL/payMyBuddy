@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.paymybuddy.paymybuddy.logger.LogMessages.*;
 
@@ -22,7 +23,7 @@ public class UserService {
         this.securityConfig = securityConfig;
     }
 
-    public Optional<User> getUserById(Long userId) {
+    public Optional<User> getUserById(UUID userId) {
         Log.debug("Fetching user by id: {}", userId);
         return userRepository.findById(userId);
     }
@@ -42,7 +43,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void deleteUser(Long userId) {
+    public void deleteUser(UUID userId) {
         Log.info("Deleting user with id: {}", userId);
         userRepository.deleteById(userId);
     }
