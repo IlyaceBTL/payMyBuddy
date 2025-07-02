@@ -6,47 +6,43 @@
   <link rel="stylesheet" th:href="@{/css/register.css}">
 </head>
 <body>
-<div th:if="${errorMessage}" style="color: red; margin-bottom: 16px;">
-  <span th:text="${errorMessage}"></span>
-</div>
-
-<div class="register-container">
+<div class="register-container" role="main" aria-label="Formulaire d'inscription">
+  <div class="logo-top-register">PayMyBuddy</div>
+  <div th:if="${errorMessage}" class="error-message" role="alert" aria-live="assertive" style="color: red; margin-bottom: 16px;">
+    <span th:text="${errorMessage}"></span>
+  </div>
   <div class="register-title">Créer un compte</div>
-
-  <form method="post" th:action="@{/register}">
+  <form method="post" th:action="@{/register}" autocomplete="on" aria-label="Formulaire d'inscription">
     <div class="input-field">
-      <label class="input-label" for="userName">Nom d'utilisateur</label>
       <input class="input-control" type="text" id="userName" name="userName" required
-             th:value="${user?.userName}">
+             th:value="${user?.userName}" autocomplete="username" aria-required="true" aria-label="Nom d'utilisateur" placeholder="Nom d'utilisateur" autofocus>
     </div>
     <div class="input-field">
-      <label class="input-label" for="lastName">Nom</label>
       <input class="input-control" type="text" id="lastName" name="lastName" required
-             th:value="${user?.lastName}">
+             th:value="${user?.lastName}" autocomplete="family-name" aria-required="true" aria-label="Nom" placeholder="Nom">
     </div>
     <div class="input-field">
-      <label class="input-label" for="firstName">Prénom</label>
       <input class="input-control" type="text" id="firstName" name="firstName" required
-             th:value="${user?.firstName}">
+             th:value="${user?.firstName}" autocomplete="given-name" aria-required="true" aria-label="Prénom" placeholder="Prénom">
     </div>
     <div class="input-field">
-      <label class="input-label" for="email">Email</label>
       <input class="input-control" type="email" id="email" name="email" required
-             th:value="${user?.email}">
+             th:value="${user?.email}" autocomplete="email" aria-required="true" aria-label="Adresse email" placeholder="Email">
     </div>
     <div class="input-field">
-      <label class="input-label" for="password">Mot de passe</label>
-      <input class="input-control" type="password" id="password" name="password" required>
+      <input class="input-control" type="password" id="password" name="password" required autocomplete="new-password" aria-required="true" aria-label="Mot de passe" placeholder="Mot de passe">
     </div>
     <div class="input-field">
-      <label class="input-label" for="confirmPassword">Confirmer le mot de passe</label>
-      <input class="input-control" type="password" id="confirmPassword" name="confirmPassword" required>
+      <input class="input-control" type="password" id="confirmPassword" name="confirmPassword" required autocomplete="new-password" aria-required="true" aria-label="Confirmer le mot de passe" placeholder="Confirmer le mot de passe">
     </div>
 
-    <button class="button-register" type="submit">
+    <button class="button-register" type="submit" aria-label="S'inscrire">
       S'inscrire
     </button>
   </form>
+  <div style="text-align:center; margin-top:32px;">
+    <a href="/login" aria-label="Retour à la connexion" style="color:#1976d2; text-decoration:underline;">Déjà inscrit ? Se connecter</a>
+  </div>
 </div>
 </body>
 </html>

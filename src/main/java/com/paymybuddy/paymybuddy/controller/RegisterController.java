@@ -22,8 +22,11 @@ public class RegisterController {
     private final RegisterService registerService;
 
     @GetMapping
-    public String showRegistrationPage() {
+    public String showRegistrationPage(Model model) {
         log.info("Displaying registration page.");
+        if (!model.containsAttribute("user")) {
+            model.addAttribute("user", new RegisterRequestDto());
+        }
         return "register";
     }
 
@@ -32,11 +35,32 @@ public class RegisterController {
         log.info("Processing registration for email: {}", registerRequestDto.getEmail());
         if (bindingResult.hasErrors()) {
             log.warn("Registration failed due to validation error: {}", bindingResult.getAllErrors().getFirst().getDefaultMessage());
+            // Efface les mots de passe pour la sécurité
+            registerRequestDto.setPassword("");
+            registerRequestDto.setConfirmPassword("");
+            model.addAttribute("user", registerRequestDto);
             model.addAttribute("errorMessage", bindingResult.getAllErrors().getFirst().getDefaultMessage());
             return "register";
         }
-        registerService.registerUser(registerRequestDto.getEmail(), registerRequestDto.getPassword(), registerRequestDto.getConfirmPassword(), registerRequestDto.getFirstName(), registerRequestDto.getLastName(), registerRequestDto.getUserName());
-        log.info("Registration successful for email: {}", registerRequestDto.getEmail());
-        return "redirect:/login";
+        try {
+            registerService.registerUser(
+                registerRequestDto.getEmail(),
+                registerRequestDto.getPassword(),
+                registerRequestDto.getConfirmPassword(),
+                registerRequestDto.getFirstName(),
+                registerRequestDto.getLastName(),
+                registerRequestDto.getUserName()
+            );
+            log.info("Registration successful for email: {}", registerRequestDto.getEmail());
+            return "redirect:/login";
+        } catch (IllegalArgumentException ex) {
+            log.warn("Registration failed: {}", ex.getMessage());
+            // Efface les mots de passe pour la sécurité
+            registerRequestDto.setPassword("");
+            registerRequestDto.setConfirmPassword("");
+            model.addAttribute("user", registerRequestDto);
+            model.addAttribute("errorMessage", ex.getMessage());
+            return "register";
+        }
     }
 }

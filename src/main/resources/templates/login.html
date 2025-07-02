@@ -7,26 +7,26 @@
     <link rel="stylesheet" th:href="@{/css/login.css}">
 </head>
 <body>
-<div class="rectangle"></div>
-<div th:if="${param.error}" style="color: red; text-align: center; margin-bottom: 16px;">
-    Email ou mot de passe incorrect.
-</div>
-<form method="post" th:action="@{/authenticate}">
-    <div class="input-field input-email">
-        <label class="input-label" for="email">Email</label>
-        <input class="input-control" type="email" id="email" name="email" required>
+    <div class="rectangle" role="main" aria-label="Zone de connexion">
+        <div class="logo-top">PayMyBuddy</div>
+        <form method="post" th:action="@{/authenticate}" aria-label="Formulaire de connexion" autocomplete="on">
+            <div th:if="${param.error}" class="error-message" role="alert" aria-live="assertive">
+                Email ou mot de passe incorrect.
+            </div>
+            <div class="input-field input-email">
+                <input class="input-control" type="email" id="email" name="email" required autocomplete="username" aria-required="true" aria-label="Adresse email" placeholder="Email" autofocus>
+            </div>
+            <div class="input-field input-password">
+
+                <input class="input-control" type="password" id="password" name="password" required autocomplete="current-password" aria-required="true" aria-label="Mot de passe" placeholder="Mot de passe">
+            </div>
+            <button class="button-login" type="submit" aria-label="Se connecter">
+                <span>Se connecter</span>
+            </button>
+        </form>
+        <div class="register-link-container">
+            <a class="register-link" href="/register" aria-label="Créer un compte">S'inscrire</a>
+        </div>
     </div>
-    <div class="input-field input-password">
-        <label class="input-label" for="password">Mot de passe</label>
-        <input class="input-control" type="password" id="password" name="password" required>
-    </div>
-    <button class="button-login" type="submit">
-        <span>Se connecter</span>
-    </button>
-    <button class="button-register" type="button" onclick="window.location.href='/register'">
-        <span>S'inscrire</span>
-    </button>
-</form>
-<div class="logo"></div>
 </body>
 </html>
