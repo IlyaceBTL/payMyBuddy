@@ -1,29 +1,33 @@
 body {
-    position: relative;
-    width: 1440px;
-    height: 1024px;
-    background: #FFFFFF;
+    min-height: 100vh;
+    min-width: 100vw;
     margin: 0;
     font-family: 'Inter', sans-serif;
+    background: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */ /* On retire le centrage vertical global */
 }
 
 /* Header Navigation */
 .header-navigation {
-    position: absolute;
-    width: 1440px;
+    width: 1200px;
     height: 164px;
-    left: 0;
-    top: 15px;
     background: #FFFFFF;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 10;
+    margin-bottom: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
 }
 
 .logo {
-    position: absolute;
-    left: 80px;
     font-size: 20px;
     font-weight: 500;
     color: #000000;
@@ -31,6 +35,9 @@ body {
     height: 30px;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .items {
@@ -39,11 +46,9 @@ body {
     justify-content: flex-end;
     align-items: center;
     gap: 48px;
-    position: absolute;
-    right: 80px;
-    top: 56px;
-    width: 593px;
+    width: 597px;
     height: 30px;
+    position: relative;
 }
 
 .nav-link {
@@ -57,11 +62,17 @@ body {
     font-weight: 500;
     height: 30px;
     padding: 0 8px;
+    outline: none;
 }
 
 .nav-link.active {
     color: #207FEE;
     font-weight: 700;
+}
+
+.nav-link:focus, .edit-btn:focus {
+    outline: 3px solid #207FEE;
+    outline-offset: 2px;
 }
 
 .items .nav-link:nth-child(1) { width: 98px; }
@@ -71,16 +82,18 @@ body {
 
 /* Profile Container */
 .profile-container {
-    position: absolute;
-    width: 749px;
-    height: 740px;
-    left: 320px;
-    top: 243px;
     background: #FFFFFF;
     box-sizing: border-box;
     padding: 40px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 800px;
+    min-height: 600px;
+    margin-top: 200px; /* espace sous le menu fixe */
 }
 
 .profile-container h2 {
@@ -89,14 +102,33 @@ body {
     font-weight: 600;
     color: #000;
     margin-bottom: 32px;
+    text-align: center;
+}
+
+.profile-flex {
+    display: flex;
+    flex-direction: row;
+    gap: 48px;
+    align-items: flex-start;
+    width: 100%;
+    justify-content: center;
 }
 
 .profile-info {
     display: flex;
     flex-direction: column;
     gap: 32px;
-    width: 709px;
+    width: 340px;
     margin-top: 40px;
+}
+
+.edit-form {
+    width: 340px;
+    margin-top: 40px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    padding: 24px 24px 16px 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
 }
 
 .profile-row {
@@ -106,6 +138,7 @@ body {
     gap: 24px;
     font-size: 20px;
     height: 56px;
+    margin-bottom: 0;
 }
 
 .profile-label {
@@ -134,16 +167,54 @@ body {
     height: 36px;
     display: flex;
     align-items: center;
+    transition: background 0.2s;
+}
+
+.edit-btn:focus, .edit-btn:hover {
+    background: #207FEE;
+    color: #fff;
+}
+
+.form-error {
+    color: #d32f2f;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    font-size: 20px;
+    padding: 12px 16px;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+    width: 300px;
+    outline: none;
+    transition: border 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border: 2px solid #207FEE;
 }
 
 @media (max-width: 1200px) {
+    .header-navigation,
     .profile-container {
+        width: 95%;
+        min-width: unset;
         left: 50%;
         transform: translateX(-50%);
-        width: 90vw;
     }
     .profile-info {
         width: 100%;
     }
+    .profile-flex {
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+    }
 }
-

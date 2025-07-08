@@ -7,37 +7,50 @@
     <link rel="stylesheet" th:href="@{/css/dashboard.css}"/>
 </head>
 <body>
-<nav class="header-navigation">
-    <div class="logo">Pay My Buddy</div>
+<nav class="header-navigation" role="navigation" aria-label="Navigation principale">
+    <div class="logo" aria-label="Accueil Pay My Buddy">Pay My Buddy</div>
     <div class="items">
-        <a th:href="@{/dashboard}" class="transferer">Transférer</a>
+        <a th:href="@{/dashboard}" class="transferer active" aria-current="page">Transférer</a>
         <a th:href="@{/profile}" class="profil">Profil</a>
         <a th:href="@{/relation}" class="ajouter-relation">Ajouter relation</a>
         <form id="logoutForm" th:action="@{/logout}" method="post" style="display:inline;">
-            <a href="#" class="nav-link" onclick="document.getElementById('logoutForm').submit(); return false;">Se déconnecter</a>
+            <a href="#" class="nav-link" onclick="document.getElementById('logoutForm').submit(); return false;" aria-label="Se déconnecter">Se déconnecter</a>
         </form>
     </div>
 </nav>
 
-<form class="transfer-zone" method="post" th:action="@{/transfer}">
-    <label>
-        <select class="dropdown-contact" name="contactEmail" required>
-            <option value="" disabled th:selected="${contactEmail == null}">Sélectionner un contact</option>
+<!-- Messages d'alerte accessibles -->
+<div th:if="${successMessage}" class="alert-message alert-success" role="status" aria-live="polite">
+    <span th:text="${successMessage}"></span>
+</div>
+<div th:if="${errorMessage}" class="alert-message alert-error" role="alert" aria-live="assertive">
+    <span th:text="${errorMessage}"></span>
+</div>
+
+<form class="transfer-zone" method="post" th:action="@{/transfer}" aria-label="Formulaire de transfert d'argent">
+    <div class="transfer-label-group">
+        <label for="contactEmail"></label>
+        <select class="dropdown-contact large-select" id="contactEmail" name="contactEmail" required aria-required="true">
+            <option value="" disabled th:selected="${contactEmail == null}">Sélectionner une relation</option>
             <option th:each="contact : ${contacts}" th:value="${contact.email}" th:text="${contact.fullName}"></option>
         </select>
-    </label>
-    <label>
-        <input type="number" class="input-montant" name="amount" placeholder="Montant" min="1" step="0.01" required>
-    </label>
-    <label>
-        <input type="text" class="input-description" name="description" placeholder="Description" maxlength="255" required>
-    </label>
-    <button class="button-transfer" type="submit">
+    </div>
+    <div class="transfer-label-group">
+        <label for="description"></label>
+        <input type="text" class="input-description" id="description" name="description" placeholder="Description" maxlength="255" required aria-required="true">
+    </div>
+    <div class="transfer-label-group">
+        <label for="amount"></label>
+        <div class="amount-input-group">
+            <input type="number" class="input-montant" id="amount" name="amount" placeholder="Montant" min="1" step="1" required aria-required="true">
+        </div>
+    </div>
+    <button class="button-transfer blue-btn" type="submit" aria-label="Payer">
         <span>Payer</span>
     </button>
 </form>
 
-<div class="table">
+<div class="table" role="region" aria-label="Historique des transactions">
     <h2 class="title">Mes transactions</h2>
     <div class="table-header">
         <div class="relations">Relations</div>

@@ -23,7 +23,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class DashBoardService {
@@ -155,15 +154,12 @@ public class DashBoardService {
             return false;
         }
 
-        // Update balances
         sender.getBankAccount().setBalance(sender.getBankAccount().getBalance().subtract(totalDebit));
         receiver.getBankAccount().setBalance(receiver.getBankAccount().getBalance().add(transferAmount));
 
-        // Save users (and their bank accounts)
         userService.saveUser(sender);
         userService.saveUser(receiver);
 
-        // Create transaction
         Transaction transaction = new Transaction();
         transaction.setAmount(transferAmount);
         transaction.setDate(LocalDateTime.now());
@@ -174,7 +170,7 @@ public class DashBoardService {
 
         transactionRepository.save(transaction);
 
-        logger.info("Transfer of {}€ from '{}' to '{}' completed.", amount, senderEmail, receiverEmail);
+        logger.info("Transfer of {}€ from '{}' to '{}' completed with a fee of {}€.", amount, senderEmail, receiverEmail, fee);
         return true;
     }
 
@@ -185,10 +181,9 @@ public class DashBoardService {
             return Collections.emptyList();
         }
         User user = userOpt.get();
-        // Récupère les amis où user est user1 ou user2
         List<Friend> friends = friendRepository.findAll().stream()
                 .filter(f -> f.getUser1().getIdUser().equals(user.getIdUser()) || f.getUser2().getIdUser().equals(user.getIdUser()))
-                .collect(Collectors.toList());
+                .toList();
 
         List<User> contacts = new ArrayList<>();
         for (Friend f : friends) {
@@ -198,10 +193,9 @@ public class DashBoardService {
                 contacts.add(f.getUser1());
             }
         }
-        // Transforme en DTO pour affichage
         return contacts.stream()
                 .map(u -> new ContactDto(u.getEmail(), u.getFirstName() + " " + u.getLastName()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<TransactionDto> getTransactionsForUser(String userEmail) {
@@ -223,6 +217,6 @@ public class DashBoardService {
                     }
                     return new TransactionDto(contactName, t.getDescription(), t.getAmount());
                 })
-                .collect(Collectors.toList());
+                .toList();
     }
     }

@@ -1,29 +1,29 @@
 body {
-    position: relative;
-    width: 1440px;
-    height: 1024px;
-    background: #FFFFFF;
+    min-height: 100vh;
+    min-width: 100vw;
     margin: 0;
     font-family: 'Inter', sans-serif;
+    background: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Header Navigation */
 .header-navigation {
-    position: absolute;
-    width: 1440px;
+    width: 1200px;
     height: 164px;
-    left: 0;
-    top: 15px;
+    margin: 15px auto;
     background: #FFFFFF;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    z-index: 10;
+    position: relative;
 }
 
 .logo {
-    position: absolute;
-    left: 80px;
+    position: relative;
+    left: 0;
     font-size: 20px;
     font-weight: 500;
     color: #000000;
@@ -39,14 +39,18 @@ body {
     justify-content: flex-end;
     align-items: center;
     gap: 48px;
-    position: absolute;
-    right: 80px;
-    top: 56px;
+    position: relative;
+    right: 0;
     width: 597px;
     height: 30px;
+    flex-wrap: nowrap;
 }
 
-.nav-link {
+.nav-link,
+.transferer,
+.profil,
+.ajouter-relation,
+.se-deconnecter {
     font-family: 'Inter', sans-serif;
     font-size: 20px;
     line-height: 150%;
@@ -57,61 +61,99 @@ body {
     font-weight: 500;
     height: 30px;
     padding: 0 8px;
+    transition: color 0.2s, background 0.2s;
+    border-bottom: none;
+}
+
+.ajouter-relation.active {
+    color: #207FEE;
+    font-weight: 700;
+    border-bottom: none;
+}
+
+.transferer.active {
+    color: #207FEE;
+    font-weight: 700;
+    border-bottom: none;
+}
+
+.ajouter-relation {
+    color: #000000;
+    font-weight: 500;
+    border-bottom: none;
 }
 
 .nav-link.active {
     color: #207FEE;
     font-weight: 700;
+    border-bottom: none;
 }
 
-.items .nav-link:nth-child(1) { width: 98px; }
-.items .nav-link:nth-child(2) { width: 50px; }
-.items .nav-link:nth-child(3) { width: 153px; }
-.items .nav-link:nth-child(4) { width: 152px; }
+.items .transferer { width: 103px; }
+.items .profil { width: 50px; }
+.items .ajouter-relation { width: 147px; }
+.items .se-deconnecter { width: 152px; }
 
-/* Form Container */
+.nav-link:focus,
+.transferer:focus,
+.profil:focus,
+.ajouter-relation:focus,
+.se-deconnecter:focus {
+    outline: 2px solid #1976d2;
+    outline-offset: 2px;
+    background: #f0f8ff;
+}
+
+/* Centrage du contenu */
+.relation-center {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 40px; /* réduit l'espace sous le menu */
+    min-height: unset;
+    flex: unset;
+}
+
 .relation-form-container {
-    position: absolute;
-    width: 946px;
-    height: 300px;
-    left: 262px;
-    top: 362px;
+    width: 500px;
+    min-height: 120px;
     display: flex;
     justify-content: center;
     align-items: center;
     background: none;
 }
 
-/* Form */
 .relation-form {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end; /* alignement bas pour input et bouton */
     gap: 16px;
-    width: 946px;
-    height: 300px;
+    width: 100%;
+    min-height: 80px;
     background: none;
 }
 
-/* Input Block */
 .input-block {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
-    width: 484px;
-    height: 92px;
+    width: 320px;
+    height: auto;
 }
 
 .input-block label {
-    width: 484px;
+    width: 100%;
     height: 30px;
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     font-size: 20px;
     line-height: 150%;
     color: #000000;
+    margin-bottom: 4px;
 }
 
 .input-block input {
@@ -121,7 +163,7 @@ body {
     align-items: flex-start;
     padding: 12px 16px;
     gap: 8px;
-    width: 484px;
+    width: 100%;
     height: 54px;
     background: #FFFFFF;
     border: 1px solid #E0E0E0;
@@ -147,6 +189,7 @@ body {
     border-radius: 8px;
     border: none;
     cursor: pointer;
+    margin-bottom: 0;
 }
 
 .add-btn span {
@@ -162,3 +205,26 @@ body {
     justify-content: center;
 }
 
+@media (max-width: 1200px) {
+    .header-navigation,
+    .relation-form-container {
+        width: 95%;
+        min-width: unset;
+    }
+    .relation-form {
+        width: 98vw !important;
+        flex-direction: column;
+        align-items: stretch;
+        height: auto;
+    }
+    .input-block {
+        width: 100% !important;
+        min-width: unset;
+        max-width: unset;
+    }
+    .add-btn {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 16px;
+    }
+}
