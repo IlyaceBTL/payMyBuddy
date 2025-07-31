@@ -352,6 +352,15 @@ body {
     border: 1px solid #d32f2f;
 }
 
+.main-title {
+    margin-top: 24px;
+}
+
+.no-transaction {
+    padding: 24px;
+    color: #888;
+}
+
 @media (max-width: 1200px) {
     .header-navigation,
     .transfer-zone,

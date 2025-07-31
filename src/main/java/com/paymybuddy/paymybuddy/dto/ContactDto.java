@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class ContactDto {
-    public String email;
-    public String fullName;
+    private String email;
+    private String fullName;
 }
 

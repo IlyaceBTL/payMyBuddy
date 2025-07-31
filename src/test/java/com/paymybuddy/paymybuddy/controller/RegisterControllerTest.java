@@ -68,7 +68,7 @@ class RegisterControllerTest {
 
         assertEquals("register", view);
         verify(model).addAttribute("user", dto);
-        verify(model).addAttribute("errorMessage", "Validation error");
+        verify(model).addAttribute("errorMessage", "Erreur d'inscription : Validation error");
         assertEquals("", dto.getPassword());
         assertEquals("", dto.getConfirmPassword());
     }
@@ -91,7 +91,7 @@ class RegisterControllerTest {
 
         assertEquals("register", view);
         verify(model).addAttribute("user", dto);
-        verify(model).addAttribute("errorMessage", "Email already exists");
+        verify(model).addAttribute("errorMessage", "Erreur lors de l'inscription : Email already exists");
         assertEquals("", dto.getPassword());
         assertEquals("", dto.getConfirmPassword());
     }

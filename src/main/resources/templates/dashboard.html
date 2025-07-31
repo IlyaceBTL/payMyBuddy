@@ -14,33 +14,34 @@
         <a th:href="@{/profile}" class="profil">Profil</a>
         <a th:href="@{/relation}" class="ajouter-relation">Ajouter relation</a>
         <form id="logoutForm" th:action="@{/logout}" method="post" style="display:inline;">
-            <a href="#" class="nav-link" onclick="document.getElementById('logoutForm').submit(); return false;" aria-label="Se déconnecter">Se déconnecter</a>
+            <button type="submit" class="nav-link" aria-label="Se déconnecter" style="background:none;border:none;padding:0;cursor:pointer;">Se déconnecter</button>
         </form>
     </div>
 </nav>
 
-<!-- Messages d'alerte accessibles -->
-<div th:if="${successMessage}" class="alert-message alert-success" role="status" aria-live="polite">
-    <span th:text="${successMessage}"></span>
-</div>
-<div th:if="${errorMessage}" class="alert-message alert-error" role="alert" aria-live="assertive">
-    <span th:text="${errorMessage}"></span>
-</div>
+<h1 class="main-title">Tableau de bord</h1>
+
+<output th:if="${successMessage}" class="alert-message alert-success" aria-live="polite">
+    <span th:text="${successMessage} ?: 'Opération effectuée avec succès.'"></span>
+</output>
+<output th:if="${errorMessage}" class="alert-message alert-error" aria-live="assertive">
+    <span th:text="${errorMessage} ?: 'Une erreur est survenue.'"></span>
+</output>
 
 <form class="transfer-zone" method="post" th:action="@{/transfer}" aria-label="Formulaire de transfert d'argent">
     <div class="transfer-label-group">
-        <label for="contactEmail"></label>
+        <label for="contactEmail">Sélectionner une relation</label>
         <select class="dropdown-contact large-select" id="contactEmail" name="contactEmail" required aria-required="true">
             <option value="" disabled th:selected="${contactEmail == null}">Sélectionner une relation</option>
             <option th:each="contact : ${contacts}" th:value="${contact.email}" th:text="${contact.fullName}"></option>
         </select>
     </div>
     <div class="transfer-label-group">
-        <label for="description"></label>
+        <label for="description">Description</label>
         <input type="text" class="input-description" id="description" name="description" placeholder="Description" maxlength="255" required aria-required="true">
     </div>
     <div class="transfer-label-group">
-        <label for="amount"></label>
+        <label for="amount">Montant</label>
         <div class="amount-input-group">
             <input type="number" class="input-montant" id="amount" name="amount" placeholder="Montant" min="1" step="1" required aria-required="true">
         </div>
@@ -50,7 +51,7 @@
     </button>
 </form>
 
-<div class="table" role="region" aria-label="Historique des transactions">
+<section class="table" aria-label="Historique des transactions">
     <h2 class="title">Mes transactions</h2>
     <div class="table-header">
         <div class="relations">Relations</div>
@@ -63,10 +64,10 @@
             <div class="desc" th:text="${transaction.description}"></div>
             <div class="amount" th:text="${#strings.concat(transaction.amount, ' €')}"></div>
         </div>
-        <div th:if="${#lists.isEmpty(transactions)}" style="padding: 24px; color: #888;">
+        <div th:if="${#lists.isEmpty(transactions)}" class="no-transaction">
             Aucune transaction à afficher.
         </div>
     </div>
-</div>
+</section>
 </body>
 </html>

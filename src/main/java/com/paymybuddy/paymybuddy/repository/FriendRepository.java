@@ -10,7 +10,4 @@ public interface FriendRepository extends JpaRepository<Friend, FriendId> {
 
     boolean existsById(FriendId id);
 
-    // Custom query methods can be added here if needed
-    // For example, to find friends by user ID or other criteria
-
 }

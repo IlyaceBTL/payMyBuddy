@@ -21,13 +21,15 @@ public class RegisterController {
 
     private final RegisterService registerService;
 
+    private static final String REGISTER ="register";
+
     @GetMapping
     public String showRegistrationPage(Model model) {
         log.info("Displaying registration page.");
         if (!model.containsAttribute("user")) {
             model.addAttribute("user", new RegisterRequestDto());
         }
-        return "register";
+        return REGISTER;
     }
 
     @PostMapping
@@ -35,12 +37,11 @@ public class RegisterController {
         log.info("Processing registration for email: {}", registerRequestDto.getEmail());
         if (bindingResult.hasErrors()) {
             log.warn("Registration failed due to validation error: {}", bindingResult.getAllErrors().getFirst().getDefaultMessage());
-            // Efface les mots de passe pour la sécurité
             registerRequestDto.setPassword("");
             registerRequestDto.setConfirmPassword("");
             model.addAttribute("user", registerRequestDto);
-            model.addAttribute("errorMessage", bindingResult.getAllErrors().getFirst().getDefaultMessage());
-            return "register";
+            model.addAttribute("errorMessage", "Erreur d'inscription : " + bindingResult.getAllErrors().getFirst().getDefaultMessage());
+            return REGISTER;
         }
         try {
             registerService.registerUser(
@@ -59,8 +60,8 @@ public class RegisterController {
             registerRequestDto.setPassword("");
             registerRequestDto.setConfirmPassword("");
             model.addAttribute("user", registerRequestDto);
-            model.addAttribute("errorMessage", ex.getMessage());
-            return "register";
+            model.addAttribute("errorMessage", "Erreur lors de l'inscription : " + ex.getMessage());
+            return REGISTER;
         }
     }
 }

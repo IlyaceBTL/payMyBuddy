@@ -45,6 +45,6 @@ public class ProfileDto {
         if (!StringUtils.hasText(password)) {
             return true; // Pas de changement de mot de passe
         }
-        return password != null && password.equals(confirmPassword);
+        return password.equals(confirmPassword);
     }
 }

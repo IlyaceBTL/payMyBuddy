@@ -23,6 +23,8 @@ public class DashBoardController {
 
     private final DashBoardService dashBoardService;
 
+    private static final String ERROR_MESSAGE = "errorMessage";
+
     public DashBoardController(DashBoardService dashBoardService) {
         this.dashBoardService = dashBoardService;
     }
@@ -47,7 +49,7 @@ public class DashBoardController {
             model.addAttribute("profileDto", dashBoardService.createProfileDto(userOptional.get()));
         } else {
             logger.warn("User not found for email '{}'.", user.getUsername());
-            model.addAttribute("errorMessage", "User not found");
+            model.addAttribute(ERROR_MESSAGE, "User not found");
         }
         return "profile";
     }
@@ -74,10 +76,10 @@ public class DashBoardController {
         logger.info("User '{}' attempts to add friend '{}'.", userDetails.getUsername(), friendEmail);
         boolean result = dashBoardService.addFriendByEmail(userDetails.getUsername(), friendEmail);
         if (result) {
-            redirectAttributes.addFlashAttribute("successMessage", "Friend added successfully.");
+            redirectAttributes.addFlashAttribute("successMessage", "Relation ajoutée avec succès.");
             logger.info("Friend '{}' added for user '{}'.", friendEmail, userDetails.getUsername());
         } else {
-            redirectAttributes.addFlashAttribute("errorMessage", "Unable to add friend. Check if the email exists or is already a friend.");
+            redirectAttributes.addFlashAttribute(ERROR_MESSAGE, "Impossible d'ajouter la relation. Vérifiez que l'email existe ou n'est pas déjà un ami.");
             logger.warn("Failed to add friend '{}' for user '{}'.", friendEmail, userDetails.getUsername());
         }
         return "redirect:/relation";
@@ -92,10 +94,10 @@ public class DashBoardController {
         logger.info("User '{}' attempts to transfer {}€ to '{}' with description '{}'.", userDetails.getUsername(), amount, contactEmail, description);
         boolean result = dashBoardService.transferMoney(userDetails.getUsername(), contactEmail, amount, description);
         if (result) {
-            redirectAttributes.addFlashAttribute("successMessage", "Transfer successful.");
+            redirectAttributes.addFlashAttribute("successMessage", "Transfert effectué avec succès.");
             logger.info("Transfer successful from '{}' to '{}'.", userDetails.getUsername(), contactEmail);
         } else {
-            redirectAttributes.addFlashAttribute("errorMessage", "Transfer failed. Please check your balance or contact.");
+            redirectAttributes.addFlashAttribute(ERROR_MESSAGE, "Échec du transfert. Veuillez vérifier votre solde ou le contact.");
             logger.warn("Transfer failed from '{}' to '{}'.", userDetails.getUsername(), contactEmail);
         }
         return "redirect:/dashboard";

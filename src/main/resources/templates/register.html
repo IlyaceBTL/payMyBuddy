@@ -6,10 +6,11 @@
   <link rel="stylesheet" th:href="@{/css/register.css}">
 </head>
 <body>
-<div class="register-container" role="main" aria-label="Formulaire d'inscription">
+<main class="register-container" aria-label="Formulaire d'inscription">
+  <h1 class="main-title" style="margin-top: 24px;">Inscription</h1>
   <div class="logo-top-register">PayMyBuddy</div>
   <div th:if="${errorMessage}" class="error-message" role="alert" aria-live="assertive" style="color: red; margin-bottom: 16px;">
-    <span th:text="${errorMessage}"></span>
+    <span th:text="${errorMessage} ?: 'Une erreur est survenue lors de l\'inscription.'"></span>
   </div>
   <div class="register-title">Créer un compte</div>
   <form method="post" th:action="@{/register}" autocomplete="on" aria-label="Formulaire d'inscription">
@@ -43,6 +44,6 @@
   <div style="text-align:center; margin-top:32px;">
     <a href="/login" aria-label="Retour à la connexion" style="color:#1976d2; text-decoration:underline;">Déjà inscrit ? Se connecter</a>
   </div>
-</div>
+</main>
 </body>
 </html>

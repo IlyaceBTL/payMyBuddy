@@ -7,17 +7,17 @@
     <link rel="stylesheet" th:href="@{/css/login.css}">
 </head>
 <body>
-    <div class="rectangle" role="main" aria-label="Zone de connexion">
+    <main class="rectangle" aria-label="Zone de connexion">
+        <h1 class="main-title" style="margin-top: 24px;">Connexion</h1>
         <div class="logo-top">PayMyBuddy</div>
         <form method="post" th:action="@{/authenticate}" aria-label="Formulaire de connexion" autocomplete="on">
             <div th:if="${param.error}" class="error-message" role="alert" aria-live="assertive">
-                Email ou mot de passe incorrect.
+                Adresse email ou mot de passe incorrect.
             </div>
             <div class="input-field input-email">
                 <input class="input-control" type="email" id="email" name="email" required autocomplete="username" aria-required="true" aria-label="Adresse email" placeholder="Email" autofocus>
             </div>
             <div class="input-field input-password">
-
                 <input class="input-control" type="password" id="password" name="password" required autocomplete="current-password" aria-required="true" aria-label="Mot de passe" placeholder="Mot de passe">
             </div>
             <button class="button-login" type="submit" aria-label="Se connecter">
@@ -27,6 +27,6 @@
         <div class="register-link-container">
             <a class="register-link" href="/register" aria-label="Créer un compte">S'inscrire</a>
         </div>
-    </div>
+    </main>
 </body>
 </html>

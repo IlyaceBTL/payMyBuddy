@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Setter
 @Getter
 public class TransactionDto {
-    public String contactName;
-    public String description;
-    public BigDecimal amount;
+    private String contactName;
+    private String description;
+    private BigDecimal amount;
 }
