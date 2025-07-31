@@ -22,6 +22,13 @@ public class LoginService {
         this.securityConfig = securityConfig;
     }
 
+    /**
+     * Attempt to log in a user with the provided email and password.
+     *
+     * @param email    the user's email
+     * @param password the user's password
+     * @throws IllegalArgumentException if credentials are invalid
+     */
     public void login(String email, String password) {
         log.info("Attempting to log in user: {}", email);
         Optional<User> user = userService.getUserByEmail(email);

@@ -44,16 +44,34 @@ public class DashBoardService {
         this.transactionRepository = transactionRepository;
     }
 
+    /**
+     * Get a user by their email.
+     * @param email the user's email
+     * @return Optional containing the user if found
+     */
     public Optional<User> getUserByEmail(String email) {
         logger.debug("Fetching user by email: {}", email);
         return userService.getUserByEmail(email);
     }
 
+    /**
+     * Create a ProfileDto from a User.
+     * @param user the user
+     * @return the ProfileDto
+     */
     public ProfileDto createProfileDto(User user) {
         logger.debug("Creating ProfileDto for user: {}", user.getEmail());
         return ProfileDto.fromUser(user);
     }
 
+    /**
+     * Edit the profile of a user.
+     * @param profileDto the profile data
+     * @param bindingResult validation result
+     * @param userDetails authenticated user details
+     * @param model Spring MVC model
+     * @return view name
+     */
     public String editProfile(@Valid ProfileDto profileDto,
                               BindingResult bindingResult,
                               UserDetails userDetails,
@@ -91,6 +109,12 @@ public class DashBoardService {
         return "redirect:/profile";
     }
 
+    /**
+     * Add a friend by email for a user.
+     * @param userEmail the user's email
+     * @param friendEmail the friend's email
+     * @return true if the friend was added, false otherwise
+     */
     public boolean addFriendByEmail(String userEmail, String friendEmail) {
         logger.debug("Attempting to add friend by email: '{}' for user '{}'", friendEmail, userEmail);
         if (userEmail.equalsIgnoreCase(friendEmail)) {
@@ -106,6 +130,7 @@ public class DashBoardService {
         User user = userOptional.get();
         User friend = friendOptional.get();
 
+        // Check if the friendship already exists in either direction
         boolean alreadyExists = friendRepository.existsById(
             new com.paymybuddy.paymybuddy.model.FriendId(user.getIdUser(), friend.getIdUser())
         ) || friendRepository.existsById(
@@ -121,6 +146,14 @@ public class DashBoardService {
         return true;
     }
 
+    /**
+     * Transfer money from one user to another, applying a fee.
+     * @param senderEmail the sender's email
+     * @param receiverEmail the receiver's email
+     * @param amount the amount to transfer
+     * @param description the transaction description
+     * @return true if the transfer was successful, false otherwise
+     */
     @Transactional
     public boolean transferMoney(String senderEmail, String receiverEmail, double amount, String description) {
         logger.debug("Transfer request: {}€ from '{}' to '{}' with description '{}'", amount, senderEmail, receiverEmail, description);
@@ -149,17 +182,20 @@ public class DashBoardService {
         BigDecimal fee = transferAmount.multiply(BigDecimal.valueOf(feeRate)).setScale(2, RoundingMode.HALF_UP);
         BigDecimal totalDebit = transferAmount.add(fee);
 
+        // Check if sender has enough balance
         if (sender.getBankAccount().getBalance().compareTo(totalDebit) < 0) {
             logger.warn("Insufficient balance for user '{}'.", sender.getEmail());
             return false;
         }
 
+        // Update balances
         sender.getBankAccount().setBalance(sender.getBankAccount().getBalance().subtract(totalDebit));
         receiver.getBankAccount().setBalance(receiver.getBankAccount().getBalance().add(transferAmount));
 
         userService.saveUser(sender);
         userService.saveUser(receiver);
 
+        // Save the transaction
         Transaction transaction = new Transaction();
         transaction.setAmount(transferAmount);
         transaction.setDate(LocalDateTime.now());
@@ -174,6 +210,11 @@ public class DashBoardService {
         return true;
     }
 
+    /**
+     * Get the list of contacts (friends) for a user.
+     * @param userEmail the user's email
+     * @return list of ContactDto
+     */
     public List<ContactDto> getContactsForUser(String userEmail) {
         Optional<User> userOpt = userService.getUserByEmail(userEmail);
         if (userOpt.isEmpty()) {
@@ -198,6 +239,11 @@ public class DashBoardService {
                 .toList();
     }
 
+    /**
+     * Get the list of transactions for a user.
+     * @param userEmail the user's email
+     * @return list of TransactionDto
+     */
     public List<TransactionDto> getTransactionsForUser(String userEmail) {
         Optional<User> userOpt = userService.getUserByEmail(userEmail);
         if (userOpt.isEmpty()) {
@@ -219,4 +265,4 @@ public class DashBoardService {
                 })
                 .toList();
     }
-    }
+}

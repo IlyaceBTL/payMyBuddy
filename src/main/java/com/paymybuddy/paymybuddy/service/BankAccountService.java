@@ -18,6 +18,10 @@ public class BankAccountService {
         this.bankAccountRepository = bankAccountRepository;
     }
 
+    /**
+     * Create a new bank account with a zero balance and save it.
+     * @return the created BankAccount
+     */
     public BankAccount createBankAccount() {
         log.info("Creating a new bank account");
         BankAccount bankAccount = new BankAccount();
@@ -25,6 +29,11 @@ public class BankAccountService {
         return saveBankAccount(bankAccount);
     }
 
+    /**
+     * Save the given bank account to the repository.
+     * @param bankAccount the bank account to save
+     * @return the saved BankAccount
+     */
     public BankAccount saveBankAccount(BankAccount bankAccount) {
         log.info("Saving bank account: {}", bankAccount);
         return bankAccountRepository.save(bankAccount);

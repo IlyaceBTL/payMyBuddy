@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class LoginController {
     Logger log = org.apache.logging.log4j.LogManager.getLogger(LoginController.class);
 
+    /**
+     * Display the login page.
+     */
     @GetMapping("/login")
     public String showLoginPage() {
         log.info("Displaying login page");

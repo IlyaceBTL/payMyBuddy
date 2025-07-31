@@ -29,15 +29,21 @@ public class DashBoardController {
         this.dashBoardService = dashBoardService;
     }
 
+    /**
+     * Display the dashboard page with user's contacts and transactions.
+     */
     @GetMapping("/dashboard")
     public String showDashboard(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         logger.info("User accessed the dashboard page.");
-        // Ajoute les contacts et transactions au modèle
+        // Add contacts and transactions to the model
         model.addAttribute("contacts", dashBoardService.getContactsForUser(userDetails.getUsername()));
         model.addAttribute("transactions", dashBoardService.getTransactionsForUser(userDetails.getUsername()));
         return "dashboard";
     }
 
+    /**
+     * Display the profile page for the authenticated user.
+     */
     @GetMapping("/profile")
     public String showProfile(Model model,
                               @AuthenticationPrincipal UserDetails user) {
@@ -54,6 +60,9 @@ public class DashBoardController {
         return "profile";
     }
 
+    /**
+     * Handle profile edit form submission.
+     */
     @PostMapping("/profile/edit")
     public String editProfile(@Valid @ModelAttribute("profileDto") ProfileDto profileDto,
                               BindingResult bindingResult,
@@ -63,12 +72,18 @@ public class DashBoardController {
         return dashBoardService.editProfile(profileDto, bindingResult, userDetails, model);
     }
 
+    /**
+     * Display the add relation (friend) page.
+     */
     @GetMapping("/relation")
     public String showAddRelation() {
         logger.info("User accessed the add relation page.");
         return "relation";
     }
 
+    /**
+     * Handle the submission of the add relation (friend) form.
+     */
     @PostMapping("/relation/add")
     public String addRelation(@RequestParam("friendEmail") String friendEmail,
                               @AuthenticationPrincipal UserDetails userDetails,
@@ -85,6 +100,9 @@ public class DashBoardController {
         return "redirect:/relation";
     }
 
+    /**
+     * Handle the submission of the money transfer form.
+     */
     @PostMapping("/transfer")
     public String transferMoney(@RequestParam("contactEmail") String contactEmail,
                                 @RequestParam("amount") double amount,

@@ -1,5 +1,8 @@
 package com.paymybuddy.paymybuddy.logger;
 
+/**
+ * Utility class containing log message templates for authentication and validation events.
+ */
 public class LogMessages {
     public static final String INVALID_EMAIL = "The email provided is invalid. {}";
     public static final String EMAIL_ALREADY_USED = "The email is already used. {}";
@@ -9,7 +12,7 @@ public class LogMessages {
     public static final String EMPTY_LASTNAME = "Last name is empty for email: {}";
 
 
+    // Private constructor to prevent instantiation
     private LogMessages() {
     }
 }
-

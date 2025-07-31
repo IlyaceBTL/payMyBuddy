@@ -23,31 +23,60 @@ public class UserService {
         this.securityConfig = securityConfig;
     }
 
+    /**
+     * Get a user by their UUID.
+     * @param userId the user's UUID
+     * @return Optional containing the user if found
+     */
     public Optional<User> getUserById(UUID userId) {
         Log.debug("Fetching user by id: {}", userId);
         return userRepository.findById(userId);
     }
 
+    /**
+     * Get a user by their username.
+     * @param userName the user's username
+     * @return Optional containing the user if found
+     */
     public Optional<User> getUserByUserName(String userName) {
         Log.debug("Fetching user by username: {}", userName);
         return userRepository.findByUserName(userName);
     }
 
+    /**
+     * Get a user by their email.
+     * @param email the user's email
+     * @return Optional containing the user if found
+     */
     public Optional<User> getUserByEmail(String email) {
         Log.debug("Fetching user by email: {}", email);
         return userRepository.findByEmail(email);
     }
 
+    /**
+     * Save a user to the repository.
+     * @param user the user to save
+     * @return the saved User
+     */
     public User saveUser(User user) {
         Log.info("Saving user with email: {}", user.getEmail());
         return userRepository.save(user);
     }
 
+    /**
+     * Delete a user by their UUID.
+     * @param userId the user's UUID
+     */
     public void deleteUser(UUID userId) {
         Log.info("Deleting user with id: {}", userId);
         userRepository.deleteById(userId);
     }
 
+    /**
+     * Update a user, encoding the password.
+     * @param user the user to update
+     * @return the updated User
+     */
     public User updateUser(User user) {
         String email = user.getEmail();
         if (isInvalidEmail(email)) {
@@ -59,6 +88,11 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    /**
+     * Update a user without changing the password.
+     * @param user the user to update
+     * @return the updated User
+     */
     public User updateUserWithoutPassword(User user) {
         String email = user.getEmail();
         if (isInvalidEmail(email)) {
@@ -71,6 +105,11 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    /**
+     * Create a new user, encoding the password.
+     * @param user the user to create
+     * @return the created User
+     */
     public User createUser(User user) {
         String email = user.getEmail();
         if (isInvalidEmail(email)) {
@@ -86,6 +125,11 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    /**
+     * Check if the provided email is invalid.
+     * @param email the email to check
+     * @return true if invalid, false otherwise
+     */
     public boolean isInvalidEmail(String email) {
         // Simple regex for email validation
         String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";

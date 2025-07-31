@@ -23,6 +23,12 @@ public class RegisterController {
 
     private static final String REGISTER ="register";
 
+    /**
+     * Display the registration page.
+     * If the model does not already contain a "user" attribute, add a new RegisterRequestDto.
+     * @param model the Spring MVC model
+     * @return the registration view name
+     */
     @GetMapping
     public String showRegistrationPage(Model model) {
         log.info("Displaying registration page.");
@@ -32,11 +38,22 @@ public class RegisterController {
         return REGISTER;
     }
 
+    /**
+     * Handle the registration form submission.
+     * If there are validation errors, return to the registration page with an error message.
+     * If registration succeeds, redirect to the login page.
+     * If registration fails due to a service exception, return to the registration page with an error message.
+     * @param registerRequestDto the registration form data
+     * @param bindingResult validation result
+     * @param model the Spring MVC model
+     * @return the next view name
+     */
     @PostMapping
     public String processRegistration(@Valid RegisterRequestDto registerRequestDto, BindingResult bindingResult, Model model) {
         log.info("Processing registration for email: {}", registerRequestDto.getEmail());
         if (bindingResult.hasErrors()) {
             log.warn("Registration failed due to validation error: {}", bindingResult.getAllErrors().getFirst().getDefaultMessage());
+            // Clear passwords for security
             registerRequestDto.setPassword("");
             registerRequestDto.setConfirmPassword("");
             model.addAttribute("user", registerRequestDto);
@@ -44,6 +61,7 @@ public class RegisterController {
             return REGISTER;
         }
         try {
+            // Attempt to register the user
             registerService.registerUser(
                 registerRequestDto.getEmail(),
                 registerRequestDto.getPassword(),
@@ -56,7 +74,7 @@ public class RegisterController {
             return "redirect:/login";
         } catch (IllegalArgumentException ex) {
             log.warn("Registration failed: {}", ex.getMessage());
-            // Efface les mots de passe pour la sécurité
+            // Clear passwords for security
             registerRequestDto.setPassword("");
             registerRequestDto.setConfirmPassword("");
             model.addAttribute("user", registerRequestDto);

@@ -6,6 +6,9 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Data Transfer Object for user registration requests.
+ */
 @Getter
 @Setter
 public class RegisterRequestDto {
@@ -30,7 +33,7 @@ public class RegisterRequestDto {
     @NotBlank(message = "Password confirmation is required")
     private String confirmPassword;
 
-    // Getters and setters
+    // Standard getters and setters for all fields
     public String getEmail() {
         return email;
     }

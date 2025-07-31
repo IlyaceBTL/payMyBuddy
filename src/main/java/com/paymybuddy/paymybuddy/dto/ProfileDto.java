@@ -8,6 +8,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.util.StringUtils;
 
+/**
+ * Data Transfer Object for user profile editing.
+ */
 @Getter
 @Setter
 public class ProfileDto {
@@ -30,20 +33,30 @@ public class ProfileDto {
 
     private String confirmPassword;
 
+    /**
+     * Creates a ProfileDto from a User entity.
+     * @param user the User entity
+     * @return a ProfileDto with user data
+     */
     public static ProfileDto fromUser(User user) {
         ProfileDto dto = new ProfileDto();
         dto.setFirstName(user.getFirstName());
         dto.setLastName(user.getLastName());
         dto.setUserName(user.getUserName());
         dto.setEmail(user.getEmail());
-        dto.setPassword("");
+        dto.setPassword(""); // Password fields are left empty for security
         dto.setConfirmPassword("");
         return dto;
     }
 
+    /**
+     * Checks if the password and confirmation match.
+     * If password is empty, returns true (no password change).
+     * @return true if confirmed, false otherwise
+     */
     public boolean isPasswordConfirmed() {
         if (!StringUtils.hasText(password)) {
-            return true; // Pas de changement de mot de passe
+            return true; // No password change
         }
         return password.equals(confirmPassword);
     }

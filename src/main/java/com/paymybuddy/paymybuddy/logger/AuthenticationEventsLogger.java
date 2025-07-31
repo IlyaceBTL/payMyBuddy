@@ -8,20 +8,36 @@ import org.springframework.security.authentication.event.AbstractAuthenticationF
 import org.springframework.security.authentication.event.LogoutSuccessEvent;
 import org.springframework.stereotype.Component;
 
+/**
+ * Component that listens to authentication events and logs them.
+ */
 @Component
 public class AuthenticationEventsLogger {
+    // Logger instance for this class
     private static final Logger log = LoggerFactory.getLogger(AuthenticationEventsLogger.class);
 
+    /**
+     * Logs successful authentication events.
+     * @param event the authentication success event
+     */
     @EventListener
     public void onSuccess(AuthenticationSuccessEvent event) {
         log.info("Successful connection for : {}", event.getAuthentication().getName());
     }
 
+    /**
+     * Logs failed authentication events.
+     * @param event the authentication failure event
+     */
     @EventListener
     public void onFailure(AbstractAuthenticationFailureEvent event) {
         log.warn("Connection failure for : {}", event.getAuthentication().getName());
     }
 
+    /**
+     * Logs successful logout events.
+     * @param event the logout success event
+     */
     @EventListener
     public void onLogout(LogoutSuccessEvent event) {
         String username = event.getAuthentication().getName();
