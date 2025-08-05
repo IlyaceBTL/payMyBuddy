@@ -21,7 +21,7 @@ public class Friend {
      */
     @Id
     @ManyToOne
-    @JoinColumn(name = "idUser_1", referencedColumnName = "idUser", nullable = false)
+    @JoinColumn(name = "id_user_1", referencedColumnName = "id_user", nullable = false)
     private User user1;
 
     /**
@@ -29,6 +29,6 @@ public class Friend {
      */
     @Id
     @ManyToOne
-    @JoinColumn(name = "idUser_2", referencedColumnName = "idUser", nullable = false)
+    @JoinColumn(name = "id_user_2", referencedColumnName = "id_user", nullable = false)
     private User user2;
 }

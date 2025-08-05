@@ -24,28 +24,28 @@ public class User {
      * Unique identifier for the user (UUID).
      */
     @Id
-    @Column(name = "idUser", columnDefinition = "BINARY(16)")
+    @Column(name = "id_user", columnDefinition = "BINARY(16)")
     private UUID idUser;
 
     /**
      * Username of the user.
      */
     @NotBlank
-    @Column(name = "userName", nullable = false)
+    @Column(name = "user_name", nullable = false)
     private String userName;
 
     /**
      * Last name of the user.
      */
     @NotBlank
-    @Column(name = "lastName", nullable = false)
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
     /**
      * First name of the user.
      */
     @NotBlank
-    @Column(name = "firstName", nullable = false)
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
     /**
@@ -66,7 +66,7 @@ public class User {
      * Reference to the user's bank account.
      */
     @ManyToOne
-    @JoinColumn(name = "idBankAccount", referencedColumnName = "idBankAccount", nullable = false,
+    @JoinColumn(name = "idBankAccount", referencedColumnName = "id_bank_account", nullable = false,
             foreignKey = @ForeignKey(name = "fk_user_bank_account"))
     private BankAccount bankAccount;
 

@@ -23,7 +23,7 @@ public class BankAccount {
      * Unique identifier for the bank account.
      */
     @Id
-    @Column(name = "idBankAccount")
+    @Column(name = "id_bank_account")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idBankAccount;
 

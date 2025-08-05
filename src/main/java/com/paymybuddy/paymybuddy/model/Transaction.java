@@ -25,7 +25,7 @@ public class Transaction {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idTransaction")
+    @Column(name = "id_transaction")
     private Long idTransaction;
 
     /**
@@ -50,14 +50,14 @@ public class Transaction {
      * The user who sent the money.
      */
     @ManyToOne
-    @JoinColumn(name = "idUserSender", referencedColumnName = "idUser", nullable = false)
+    @JoinColumn(name = "id_user_sender", referencedColumnName = "id_user", nullable = false)
     private User userSender;
 
     /**
      * The user who received the money.
      */
     @ManyToOne
-    @JoinColumn(name = "idUserReceveir", referencedColumnName = "idUser", nullable = false)
+    @JoinColumn(name = "id_user_receveir", referencedColumnName = "id_user", nullable = false)
     private User userReceveir;
 
     /**
